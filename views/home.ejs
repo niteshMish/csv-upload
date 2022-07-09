@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/home.css">
     <title>Document</title>
 </head>
 <body>
@@ -20,8 +21,48 @@
         <input type="submit" value="open">
     </form>
     <%}%>
+    <%}%>
 
+<%if(locals.fileData){%>
+    <form  action="/sort" method="post">
+    <select name="colmmn" id="colmmn" required>
+        <% for( let i =0  , j = 0 ; j  < fileData[0].length ; j++ ){%>
+              <option value=" <%=j%> " ><%=fileData[i][j]%></option>
+        <%}%>
+    </select>
+   
+    <input type="hidden" name="fileName" value="<%=fileData%>">
+
+    <select name="sort" id="sort-by" required>
+        <option value="0"> ascending</option>
+        <option value="1"> decending</option>
+    </select>
+    <input type="submit" value="sort">
+</form>
+  
+ <%}%>
+ <%if(locals.fileData){%>
+<table>
+   <% for(let i = 0 ; i < fileData.length ; i ++){%>
+         <%if(i == 0){%>
+            <tr>
+                <% for(let j = 0 ; j < fileData[i].length-1;  j++){%>
+                    <th> <%=fileData[i][j]%></th>  
+                <%}%>
+            </tr>
+            
+         <%} else{%> 
+            <tr>
+                <% for(let j = 0 ; j < fileData[i].length-1;  j++){%>
+                    <td> <%=fileData[i][j]%></td>  
+                <%}%>
+            </tr>
+       <%}%>
+    <%} %>
+   </table>
 <%}%>
+
+
 
 </body>
 
