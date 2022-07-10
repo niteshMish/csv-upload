@@ -8,61 +8,35 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>this is home page</h1>
+    <nav id="nav-bar">
+        <h1>CSV UPLOADER</h1>
+    </nav>
+    
+<div id="div-container">
+    <div id="add-file-container">
     <form action="/add-file" enctype="multipart/form-data"  method="post">
-        <input type="file" id="myFile" name="avatar">
-        <input type="submit">
+        <fieldset>
+            <input type="file" id="myFile" name="avatar" accept=".csv">
+            <input type="submit">
+        </fieldset>
     </form>
+</div>
+<div>
 <%if(locals.files){%>
-   <%for(f of files){%>
-    <p><%= f.fileName%></p>
-    <form action="/open-file" method="post">
-        <input type="hidden" name="fileName" value="<%=f.avatar%>">
-        <input type="submit" value="open">
-    </form>
-    <%}%>
-    <%}%>
+    <table>
 
-<%if(locals.fileData){%>
-    <form  action="/sort" method="post">
-    <select name="colmmn" id="colmmn" required>
-        <% for( let i =0  , j = 0 ; j  < fileData[0].length ; j++ ){%>
-              <option value=" <%=j%> " ><%=fileData[i][j]%></option>
-        <%}%>
-    </select>
-   
-    <input type="hidden" name="fileName" value="<%=fileData%>">
+        <% for(let i=0; i < files.length; i++)  {%>
+          <tr> 
+            <td> <a href="open/<%= files[i].avatar %>">
+              <%= files[i].fileName %>
+            </td>
+           </tr> 
+        <% } %>
 
-    <select name="sort" id="sort-by" required>
-        <option value="0"> ascending</option>
-        <option value="1"> decending</option>
-    </select>
-    <input type="submit" value="sort">
-</form>
-  
- <%}%>
- <%if(locals.fileData){%>
-<table>
-   <% for(let i = 0 ; i < fileData.length ; i ++){%>
-         <%if(i == 0){%>
-            <tr>
-                <% for(let j = 0 ; j < fileData[i].length-1;  j++){%>
-                    <th> <%=fileData[i][j]%></th>  
-                <%}%>
-            </tr>
-            
-         <%} else{%> 
-            <tr>
-                <% for(let j = 0 ; j < fileData[i].length-1;  j++){%>
-                    <td> <%=fileData[i][j]%></td>  
-                <%}%>
-            </tr>
-       <%}%>
-    <%} %>
-   </table>
+    </table>
 <%}%>
-
-
+</div>
+</div>
 
 </body>
 

@@ -8,7 +8,9 @@ const fileSchema = new mongoose.Schema({
         required:true
     },
     avatar:{
-        type:String
+        type:String,
+        required:true
+
     }
     
 },{
@@ -22,10 +24,27 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       cb(null, file.fieldname + '-' + uniqueSuffix)
+       File.create({
+        fileName: file.originalname, 
+        avatar:file.fieldname + '-' + uniqueSuffix
+    })
     }
+  
   })
 //// statics function
-  fileSchema.statics.uploadedAvatar = multer({storage:storage}).single('avatar');
+  fileSchema.statics.uploadedAvatar = multer({
+    storage: storage,
+    fileFilter: (req,file,cb)=>{
+
+        // CSV validator
+        if(file.mimetype == 'text/csv'){
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error("this is not a  .csv file !"));
+        }
+    }
+}).single('avatar');
   fileSchema.statics.avatarPath = AVATAR_PATH;
   
 const File = mongoose.model('File',fileSchema);

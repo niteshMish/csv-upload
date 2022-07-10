@@ -5,8 +5,8 @@ const homeController = require('../controller/home_controller');
 
 router.get('/',homeController.home);
 router.post('/add-file',homeController.addFile);
-router.post('/open-file',homeController.open);
-router.post('/sort' ,homeController.sort1);
+router.get('/open/:id',homeController.open);
+
 // router.get('/add-project',homeController.addProject);
 // router.use('/project',require('./projects'));
 // router.post('/project-search-by-lables',homeController.SearchByLables)
