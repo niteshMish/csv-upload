@@ -47,5 +47,7 @@ td {
   }
   #add-file-container{
     border-radius: 5px;
-    background-color: darkslategray;
+    border:none;
+    background-color: rgb(85, 109, 109);
+    height: 40px;
   }

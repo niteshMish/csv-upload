@@ -24,7 +24,9 @@
 <div>
 <%if(locals.files){%>
     <table>
-
+          <th>
+             File List
+          </th>
         <% for(let i=0; i < files.length; i++)  {%>
           <tr> 
             <td> <a href="open/<%= files[i].avatar %>">
