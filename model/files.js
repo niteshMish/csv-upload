@@ -10,8 +10,11 @@ const fileSchema = new mongoose.Schema({
     avatar:{
         type:String,
         required:true
-
-    }
+      },
+      path:{
+        type:String,
+        required:true
+      }
     
 },{
     timestamps: true
@@ -23,13 +26,16 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null, file.fieldname + '-' + uniqueSuffix+".csv")
        File.create({
         fileName: file.originalname, 
-        avatar:file.fieldname + '-' + uniqueSuffix
+        avatar:file.fieldname + '-' + uniqueSuffix+".csv",
+        path: "./uploads/avatars/"+avatar
     })
     }
-  
+    ////
+    
+    ////
   })
 //// statics function
   fileSchema.statics.uploadedAvatar = multer({
