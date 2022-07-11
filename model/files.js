@@ -20,38 +20,38 @@ const fileSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.join(__dirname,'..',AVATAR_PATH));
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix+".csv")
-       File.create({
-        fileName: file.originalname, 
-        avatar:file.fieldname + '-' + uniqueSuffix+".csv",
-        path: "./uploads/avatars/"+avatar
-    })
-    }
-    ////
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//       cb(null, path.join(__dirname,'..',AVATAR_PATH));
+//     },
+//     filename: function (req, file, cb) {
+//       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//       cb(null, file.fieldname + '-' + uniqueSuffix+".csv")
+//        File.create({
+//         fileName: file.originalname, 
+//         avatar:file.fieldname + '-' + uniqueSuffix+".csv",
+//         path: "./uploads/avatars/"+file.fieldname + '-' + uniqueSuffix+".csv"
+//     })
+//     }
+//     ////
     
     ////
-  })
-//// statics function
-  fileSchema.statics.uploadedAvatar = multer({
-    storage: storage,
-    fileFilter: (req,file,cb)=>{
+//   })
+// //// statics function
+//   fileSchema.statics.uploadedAvatar = multer({
+//     storage: storage,
+//     fileFilter: (req,file,cb)=>{
 
-        // CSV validator
-        if(file.mimetype == 'text/csv'){
-            cb(null, true);
-        } else {
-            cb(null, false);
-            return cb(new Error("this is not a  .csv file !"));
-        }
-    }
-}).single('avatar');
-  fileSchema.statics.avatarPath = AVATAR_PATH;
+//         // CSV validator
+//         if(file.mimetype == 'text/csv'){
+//             cb(null, true);
+//         } else {
+//             cb(null, false);
+//             return cb(new Error("this is not a  .csv file !"));
+//         }
+//     }
+// }).single('avatar');
+//   fileSchema.statics.avatarPath = AVATAR_PATH;
   
 const File = mongoose.model('File',fileSchema);
 module.exports = File;
